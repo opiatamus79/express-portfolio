@@ -3,17 +3,18 @@
 
 .banner-area {
     .single_slide_banner {
-        background-size: cover;
+        background-size: auto 100% !important;
         background-repeat: no-repeat;
+        
     }
     .slide_bg1 {
-        background: url(../../img/banner/banner-bg1.jpg);
+        background: url(../../img/banner/common-banner.jpg);
     }
     .slide_bg2 {
-        background: url(../../img/banner/banner-bg2.jpg);
+        background: url(../../img/banner/common-banner.jpg);
     }
     .slide_bg3 {
-        background: url(../../img/banner/banner-bg3.jpg);
+        background: url(../../img/banner/common-banner.jpg);
     }
     .fullscreen {
         @media (max-width: 991px) {
