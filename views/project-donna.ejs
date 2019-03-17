@@ -9,7 +9,8 @@
 	<link rel="stylesheet" href="stylesheets/css/bootstrap.css">
 	<link rel="stylesheet" href="vendors/linericon/style.css">
 	<link rel="stylesheet" href="stylesheets/css/font-awesome.min.css">
-	<link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+	<link rel="stylesheet" href="vendors/owlcarousel/dist/assets/owl.carousel.min.css" />
+	<link rel="stylesheet" href="vendors/owlcarousel/dist/assets/owl.theme.default.min.css" />
 	<link rel="stylesheet" href="stylesheets/css/magnific-popup.css">
 	<link rel="stylesheet" href="vendors/nice-select/css/nice-select.css">
 	<link rel="stylesheet" href="vendors/animate-css/animate.css">
@@ -20,13 +21,12 @@
   <body>
 
 
-
 	<header class="header_area">
 		<div class="main_menu">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand" href="/"><img src="img/logo.png" alt=""></a>
+					<a class="navbar-brand" href="/"><img src="img/logo.png" alt="" style="width: 54px; height: 60px;"></a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="icon-bar"></span>
@@ -83,41 +83,64 @@
 			</div>
 		</div>
 	</section>
+
 	<!--================ End Portfolio Banner Area =================-->
 
 	<!--================ Start Portfolio Details Area =================-->
+
 	<section class="portfolio_details_area section_gap">
 		<div class="container">
 			<div class="portfolio_details_inner">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="left_img">
-							<img class="img-fluid" src="img/works/project-details-1.jpg" alt="">
-						</div>
-					</div>
-					<div class="offset-md-1 col-md-5">
-						<div class="portfolio_right_text mt-30">
-							<h4>Lavendar ambient colorlib</h4>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore
-								magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-							<ul class="list">
-								<li><span>Rating</span>: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-									 class="fa fa-star"></i></li>
-								<li><span>Client</span>: colorlib</li>
-								<li><span>Website</span>: colorlib.com</li>
-								<li><span>Completed</span>: 17 Aug 2018</li>
-							</ul>
-							<ul class="list social_details">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-behance"></i></a></li>
-								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
+<div  id="_owl-carousel" class=" owl-carousel owl-theme owl-loaded" >
+							<div  class="row">
+								<div class="col-md-6">
+									<div class="left_img">
+										<img class="img-fluid" src="img/works/project-details-1.jpg" alt="">
+									</div>
+								</div>
+								<div class="offset-md-1 col-md-5">
+									<div class="portfolio_right_text mt-30">
+										<h4>Frontend </h4>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+											dolore
+											magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+										<ul class="list">
+											<li><span>Rating</span>: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+												 class="fa fa-star"></i></li>
+											<li><span>Client</span>: colorlib</li>
+											<li><span>Website</span>: colorlib.com</li>
+											<li><span>Completed</span>: 17 Aug 2018</li>
+										</ul>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="left_img">
+										<img class="img-fluid" src="img/works/project-details-1.jpg" alt="">
+									</div>
+								</div>
+								<div class="offset-md-1 col-md-5">
+									<div class="portfolio_right_text mt-30">
+										<h4>Backend</h4>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+											dolore
+											magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+										<ul class="list">
+											<li><span>Rating</span>: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+												 class="fa fa-star"></i></li>
+											<li><span>Client</span>: colorlib</li>
+											<li><span>Website</span>: colorlib.com</li>
+											<li><span>Completed</span>: 17 Aug 2018</li>
+										</ul>
+
+									</div>
+								</div>
+							</div>
+			</div>
+			
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
 					magna
 					aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -137,7 +160,11 @@
 					magnam
 					aliquam quaerat voluptatem.</p>
 			</div>
+
 		</div>
+
+		<!-- Set up your HTML -->
+
 	</section>
 	<!--================ Start Portfolio Details Area =================-->
 
@@ -176,6 +203,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 
 	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="/vendors/owlcarousel/dist/owl.carousel.min.js"></script>
+
 	<script src="js/popper.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/stellar.js"></script>
@@ -183,13 +212,35 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
 	<script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
 	<script src="vendors/isotope/isotope-min.js"></script>
-	<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
 	<script src="js/jquery.ajaxchimp.min.js"></script>
 	<script src="js/mail-script.js"></script>
 	<!--gmaps Js-->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 	<script src="js/gmaps.min.js"></script>
 	<script src="js/theme.js"></script>
+
+
+<script>
+$( document ).ready(function() {
+
+ $("#_owl-carousel").owlCarousel({
+        loop:true,
+        items: 1,
+        margin:10,
+	   autoplay:false,
+	   autoplayTimeout:1000,
+	   autoplayHoverPause:true,
+        nav:true,
+      navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
+
+});
+
+
+
+});
+
+</script>
+
 
 
   </body>
