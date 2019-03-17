@@ -28,4 +28,9 @@ router.get('/project-donna', function(req, res, next) {
 });
 
 
+/* GET about page. */
+router.get('/project-tob', function(req, res, next) {
+  res.render('project-tob', { title: 'Project-Detail' });
+});
+
 module.exports = router;
