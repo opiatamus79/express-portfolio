@@ -7,8 +7,8 @@ const db 		= require('../connect/connect_test_PGP.js').db
 
 const WooCommerce = new WooCommerceAPI({
   url: 'http://www.take-outbuddy.com',
-  consumerKey: 'ck_be6cecfd3a222a02f030493f2a1488c9dc36b12b',
-  consumerSecret: 'cs_44c94d3e15040d131dac04c0d4b83b0eccadc8de',
+  consumerKey: process.env.consumerKey,
+  consumerSecret: process.env.consumerSecret,
   wpAPI: true,
   wpAPIPrefix: 'wc-api'
 });
