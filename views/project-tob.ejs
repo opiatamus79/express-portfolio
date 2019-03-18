@@ -3,48 +3,7 @@
 
 	<header class="header_area">
 		<div class="main_menu">
-			<nav class="navbar navbar-expand-lg navbar-light">
-				<div class="container">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand" href="/"><img src="img/logo.png" alt="" style="width: 54px; height: 60px;"></a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav menu_nav justify-content-end">
-							<li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-							<li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-							<li class="nav-item submenu dropdown">
-								<a class="nav-link" href="#">Portfolio</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
-									<li class="nav-item"><a class="nav-link" href="portfolio-details.html">Portrfolio Details</a>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Pages</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Blog</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="/users">Blog</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
-								</ul>
-							</li>
-							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
+		<% include navbar.ejs %>
 		</div>
 	</header>
 
@@ -53,7 +12,7 @@
 		<div class="banner_inner d-flex align-items-center">
 			<div class="container">
 				<div class="banner_content text-right">
-					<h1>Project - Takeoutbuddy(WIP)</h1>
+					<h1>Project - Takeout-buddy (WIP)</h1>
 					<div class="page_link">
 						<a href="index.html">Home</a>
 						<a href="portfolio.html">Portfolio</a>
@@ -109,7 +68,7 @@
 										<h4>Setting up the Communication module</h4>
 										<p>Had setup <a target="_blank" href="https://www.npmjs.com/package/nodemailer">Nodemailer</a> to be able to send emails to vendors that were involved in a purchase from Woocommerce site. The Woocommerce api originally only sent the woocommerce account an email and would not send out emails to the vendors involved in a sale nor would the items be seperated for each vendor on a receipt. This was handled by the web api.</p>
 										<ul class="list">
-											<li><span>Code Used</span>: <a target="_blank" href=""> WooCommerceRoutes.js</a>, <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/app_modules/communication/communication.js"> communication.js </a></li>
+											<li><span>Code Used</span>: <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/app_modules/communication/woocommerceRoutes-snippet.js"> WooCommerceRoutes-snippet.js</a>, <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/app_modules/communication/communication.js"> communication.js </a></li>
 										</ul>
 
 									</div>
@@ -120,47 +79,18 @@
 								<div class="col-md-7">
 									<div class="left_img">
 										<div class="slider">
-											<div><img class="img-fluid" src="img/works/project-donna-8.png" alt=""></div>
+											<div><img class="img-fluid" src="img/works/project-tob-6.png" alt=""></div>
 											<div><img class="img-fluid" src="img/works/project-donna-9.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-donna-10.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-donna-11.png" alt=""></div>
 
 										</div>
 									</div>
 								</div>
 								<div class="offset-md-1 col-md-4">
 									<div class="portfolio_right_text mt-30">
-										<h4>Customer Dashboard</h4>
-										<p>I was responsible for connecting the data that had been retrieved from the backend to the fronted, I was also required to make updates to the backend and correct queries made to retrieve a customers payment history to be able to process the data on the frontend.</p>
+										<h4>Receipt Processing Script</h4>
+										<p>In order to send each recognized vendor an email when orders were placed the original receipt data sent from WooCommerce would get parsed using the script created. This is the last work committed to the project. The project would only need to have email templates setup to cleanly display a receipt to a vendor and the project would be considered complete.</p>
 										<ul class="list">
-											<li><span>Code</span>: colorlib</li>
-											<li><span>Website</span>: colorlib.com</li>
-											<li><span>Completed</span>: 17 Aug 2018</li>
-										</ul>
-
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-7">
-									<div class="left_img">
-										<div class="slider">
-											<div><img class="img-fluid" src="img/works/project-donna-12.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-donna-13.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-donna-14.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-donna-15.png" alt=""></div>
-
-										</div>
-									</div>
-								</div>
-								<div class="offset-md-1 col-md-4">
-									<div class="portfolio_right_text mt-30">
-										<h4>Customer - Support Tickets</h4>
-										<p>I was responsible for creating the CRUD routes for the Support Tickets module. I was also responsible for creating the HTML template that is use for the page.</p>
-										<ul class="list">
-											<li><span>Code</span>: colorlib</li>
-											<li><span>Website</span>: colorlib.com</li>
-											<li><span>Completed</span>: 17 Aug 2018</li>
+											<li><span>Code Used</span>: <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/receiptlogic.js">receiptlogic.js</a></li>
 										</ul>
 
 									</div>
@@ -169,7 +99,7 @@
 							<!--=================/ Project SLIDER ==================== -->
 			</div>
 			
-				<p> The motive for this project was to be able to process/parse receipts that would contain orders placed for multiple vendors on a Wordpress site that is using WooCommerce. My partner in this project (Felipe Cantu) created a wordpress site and asked that I create an application that could split the multiple items found on a single receipt and issue multiple receipts based on the vendors that received an order. The vendors involved in a sale would also each receive an email of a processed receipt, which was setup through the web api using Nodemailer. The site allows customers to place orders for products from multiple vendors in a single checkout. </p>
+				<p> A personal project started by myself and one other member. The motive for this project was to be able to process/parse receipts that would contain orders placed for multiple vendors on a Wordpress site that is using WooCommerce. My partner in this project (Felipe Cantu) created a wordpress site and asked that I create an application that could split the multiple items found on a single receipt and issue multiple receipts based on the vendors that received an order. The vendors involved in a sale would also each receive an email of a processed receipt, which was setup through the web api using Nodemailer. The site allows customers to place orders for products from multiple vendors in a single checkout. </p>
 				<p> The Web Api has been developed in Express/Nodejs and was integrated with WooCommerce Api and Nodemailer. 
 					</p>
 			</div>

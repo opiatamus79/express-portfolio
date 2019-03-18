@@ -3,48 +3,7 @@
 
 	<header class="header_area">
 		<div class="main_menu">
-			<nav class="navbar navbar-expand-lg navbar-light">
-				<div class="container">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand" href="/"><img src="img/logo.png" alt="" style="width: 54px; height: 60px;"></a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav menu_nav justify-content-end">
-							<li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-							<li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-							<li class="nav-item submenu dropdown">
-								<a class="nav-link" href="#">Portfolio</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
-									<li class="nav-item"><a class="nav-link" href="portfolio-details.html">Portrfolio Details</a>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Pages</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Blog</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="/users">Blog</a></li>
-									<li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
-								</ul>
-							</li>
-							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
+			<% include navbar.ejs %>
 		</div>
 	</header>
 
@@ -112,7 +71,7 @@
 								<div class="offset-md-1 col-md-4">
 									<div class="portfolio_right_text mt-30">
 										<h4>Customer Registration</h4>
-										<p>I was responsible for setting up the routes on the backend that handled creating a user entity on the database and creating an account entity on the database and linking the both the account of the user and their account information on the backend. I was also responsible for setting up the html template to be used with the Angular Project.</p>
+										<p>I was responsible for setting up the routes on the backend that handled creating a user entity on the database and creating an account entity on the database and linking the both the created user entry and their account information on the backend. I was also responsible for setting up the html template to be used with the Angular Project.</p>
 										<ul class="list">
 											<li><span>Code Used</span>: <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/donna/customer-signup/frontend/customer-signup.component.html">customer-signup.component.html</a>,  
 											<a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/donna/customer-signup/backend/accounts.js">account.js</a>,
