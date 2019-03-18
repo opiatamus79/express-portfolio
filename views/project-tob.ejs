@@ -78,6 +78,7 @@
 										<div class="slider">
 											<div><img class="img-fluid" src="img/works/project-tob-2.png" alt=""></div>
 											<div><img class="img-fluid" src="img/works/project-tob-1.png" alt=""></div>
+											<div><img class="img-fluid" src="img/works/project-tob-4.png" alt=""></div>
 										</div>
 									</div>
 								</div>
@@ -85,9 +86,9 @@
 								<div class="offset-md-1 col-md-4">
 									<div class="portfolio_right_text mt-30">
 										<h4>Setting up the Database</h4>
-										<p>For the project I had to create a database that would be used to parse data received from the WooCommerce API (V3) and store vendor information such as emails, items by vendor, and the items information.</p>
+										<p>For the project I had to create a Postgresql database that would be used to parse data received from the WooCommerce API (V3) and store vendor information such as emails, items by vendor, and the items information. I was also required to setup the connect module on the web api to process database imports for current vendors/items from the WooCommerce store. The database was also an aws instance deployed on <a target="_blank" href="https://www.heroku.com/">Heroku</a> (done for free testing).</p>
 										<ul class="list">
-											<li><span>Code Used</span>: <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/routes/woocommerceRoutes.js">woocommerceRoutes.js</a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/app_modules/woocommerce/woocommerce.js">woocommerce.js</a>, <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/db/db.sql">db.sql </a></li>
+											<li><span>Code Used</span>: <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/routes/woocommerceRoutes.js">woocommerceRoutes.js</a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/app_modules/woocommerce/woocommerce.js">woocommerce.js</a>, <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/app_modules/connect/connect_test_PGP.js">connect_test_PGP.js</a>, <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/db/db.sql">db.sql </a></li>
 										</ul>
 
 									</div>
@@ -98,23 +99,17 @@
 								<div class="col-md-7">
 									<div class="left_img">
 										<div class="slider">
-											<div><img class="img-fluid" src="img/works/project-donna-3.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-donna-4.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-donna-5.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-donna-5.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-donna-7.png" alt=""></div>
-
+											<div><img class="img-fluid" src="img/works/project-tob-3.png" alt=""></div>
+											<div><img class="img-fluid" src="img/works/project-tob-5.png" alt=""></div>
 										</div>
 									</div>
 								</div>
 								<div class="offset-md-1 col-md-4">
 									<div class="portfolio_right_text mt-30">
-										<h4>Customer Registration</h4>
-										<p>I was responsible for setting up the routes on the backend that handled creating a user entity on the database and creating an account entity on the database and linking the both the account of the user and their account information on the backend.</p>
+										<h4>Setting up the Communication module</h4>
+										<p>Had setup <a target="_blank" href="https://www.npmjs.com/package/nodemailer">Nodemailer</a> to be able to send emails to vendors that were involved in a purchase from Woocommerce site. The Woocommerce api originally only sent the woocommerce account an email and would not send out emails to the vendors involved in a sale nor would the items be seperated for each vendor on a receipt. This was handled by the web api.</p>
 										<ul class="list">
-											<li><span>Code</span>: colorlib</li>
-											<li><span>Work Setup</span>: Frontend/Backend</li>
-											<li><span>Completed</span>: 17 Aug 2018</li>
+											<li><span>Code Used</span>: <a target="_blank" href=""> WooCommerceRoutes.js</a>, <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/app_modules/communication/communication.js"> communication.js </a></li>
 										</ul>
 
 									</div>

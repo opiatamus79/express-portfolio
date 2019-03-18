@@ -8,8 +8,8 @@ var transporter = nodemailer.createTransport(smtpTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
   auth: {
-    user: 'tobborders@gmail.com', //use take out buddy email
-    pass: 'Takeoutbuddy9566' //use take out buddy password
+    user: process.env.email_username, //use take out buddy email
+    pass: process.env.email_pass //use take out buddy password
   }
 }));
 
@@ -23,7 +23,7 @@ function send_email(data, test_maillist, vendors, callback){
 
     for(var m = 0; m < test_maillist.length; m++) {//hardcoded 2 need to replace this with the amount of vendors. 
       mailOptions = {
-        from: "tobborders@gmail.com",
+        from: process.env.email_username,
         to: test_maillist[m].vendors_email,
         subject: "Test using nodemailer",
         generateTextFromHTML: true,
