@@ -4,10 +4,10 @@ const pgp = require('pg-promise')();
 const connection = {
 	host: 'ec2-54-197-230-161.compute-1.amazonaws.com',
 	port: '5432',
-	database: 'd7nrpvh7df1oh5',
-	user: 'ggpcdbcgozirlm',
-    password: '75074fa916a103f7b81e00191bd51dd7ba1610ca7b445a462ee4a86d13491bbe',
-    application_name: 'postgresql-graceful-58328',
+	database: process.env.db_name,
+	user: process.env.db_user,
+    password: process.env.db_password,
+    application_name: process.env.application_name,
     ssl: true,
 	max : 5000
 }
