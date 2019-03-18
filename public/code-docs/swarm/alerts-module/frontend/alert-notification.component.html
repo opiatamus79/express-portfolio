@@ -1,0 +1,67 @@
+<form [formGroup]="notificationFG" (ngSubmit)="updateNotification()">
+      <!-- Edit Alert Notification modal -->
+              
+              
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" (click)="closingModal()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <i class="fa fa-envelope-o modal-icon"></i>
+                          <h4 class="modal-title">Edit Alert Notification</h4>
+                          <small class="font-bold">Make sure to click on <code>Save changes</code> for your changes to take effect.</small>
+                      </div>
+                      <div class="modal-body">
+                          <div class="form-group" id="data_1">
+                              <div class="row">
+                                  <div class="col-xs-6">
+                                          <label>Status Required</label>
+                                          <div class="form-group">
+                                              <select class="form-control m-b" name="status_req" id="status_req" formControlName="status_req" tabindex="2">
+                                                  <option disabled="true" selected>Select</option>
+                                                  <option value="true">Yes</option>
+                                                  <option value="false">No</option>
+                                               </select>
+                                          </div>
+                                      </div>
+                                  <div class="col-xs-6">
+                                      <label>Feedback Required</label>
+                                      <div class="form-group">
+                                          <select class="form-control m-b" name="feedback_req" id="feedback_req" formControlName="feedback_req" tabindex="3">
+                                              <option disabled="true" selected>Select</option>
+                                              <option value="true">Yes</option>
+                                              <option value="false">No</option>
+                                           </select>
+                                      </div>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                              <div class="col-xs-12">
+                                  <label>Subject</label>
+                                  <div class="form-group">
+                                   <input type="text" value="" class="form-control" name="subject" id="subject" formControlName="subject" >
+                                  </div>
+                              </div>
+
+                              </div>
+                              <div class="row">
+                                      <div class="form-group" style="margin-bottom:10px; " required="true">
+                                              <label for="exampleInputEmail2" >Message</label>
+                                              <textarea rows="5" type="text" name="message" id="message" formControlName="message" 
+                                                     class="form-control"> </textarea>
+                                          </div>
+
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-white" (click)="closingModal()">Close</button>
+                          <button type="button" class="btn btn-success" (click)="updateNotification()">Save changes</button>
+                          <button id="email_notification" type="button" class="btn btn-info">Send Test Notification</button>
+                      </div>
+          <!-- /Edit Alert Notifcation modal -->
+
+</form>
+
+
+
+<!--<swal #createSuccess title="Ticket Submitted" text="" type="success" [showCancelButton]="false" (confirm)="confirmNewTicket()">
+</swal>-->

@@ -1,0 +1,412 @@
+<form [formGroup]="newAlertFormGroup" (ngSubmit)="openEditAlertModal()">
+      <!-- Create Alert modal -->
+      <div class="modal-header">
+        <button type="button" class="close" (click)="closingModal()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <i class="fa fa-bullhorn modal-icon"></i>
+        <h4 class="modal-title">Create Alert</h4>
+        <small class="font-bold">Make sure to edit the <code>Alert Settings</code>/<code>Alert Notifcation</code> to finalize the Alert settings.</small>
+    </div>
+    <div class="modal-body">
+                <div class="row"> 
+                    <div class="col-xs-6">
+                            <label>Select Company</label>
+                            <div class="form-group">
+                                <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="2" id="ca_selectCompany">
+                                    <option disabled="true" selected>Select</option>
+                                    <option value="" >Company A</option>
+                                    <option value="">Company B</option>
+                                 </select>
+                            </div>
+                        </div>
+                    </div>
+        <div class=" panel-group" id="create_alert_form" style="display:none;">
+            <accordion>
+                <div *ngIf="ShowZones" [@fadeInOut] id="zone-accordion">
+                    <accordion-group heading="Zones" [isOpen]="true">
+                        <div class="table-responsive">
+                                <table  class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Zone ID</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Details</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let zone of zones">
+                                        <td><p-checkbox  #myCheckbox [disabled]="PagCheckBox.disabled(zone, checkedList)" [checked]="PagCheckBox.getSelectedItems(zone, checkedList)" outline="true" 
+                                            animation="rotate" color="danger" bigger="true" (change)="PagCheckBox.onSetCheckBox($event, zone, checkedList)">
+                                            <i p-icon class="fa fa-check"></i>
+                                            </p-checkbox>
+                                        </td>
+                                        <td>{{zone.id}}</td>
+                                        <td>{{zone.name}}</td>
+                                        <td>{{zone.description}}</td>
+                                        <td>{{zone.type}}</td>
+                                        <td>{{zone.details}}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                            <pagination  [rotate]="true" [itemsPerPage]="paginationPageLimit" [totalItems]="paginationTotalZones" [maxSize]="paginationMaxSize" [(ngModel)]="paginationCurrentPage" 
+                            [ngModelOptions]="{standalone: true}" (pageChanged)="pageChangedZones($event)" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
+                        </div> 
+                    </accordion-group>
+                </div>
+                <div *ngIf="ShowHubs" [@fadeInOut] id="hub-accordion" >
+                    <accordion-group heading="Hubs" [isOpen]="true">
+                            <div class="table-responsive">
+                                    <table  class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Hub ID</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Type</th>
+                                            <th>Details</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let hub of hubs">
+                                            <td><p-checkbox  #myCheckbox [disabled]="PagCheckBox.disabled(hub, checkedList)" [checked]="PagCheckBox.getSelectedItems(hub, checkedList)" 
+                                                outline="true" 
+                                                animation="rotate" color="danger" bigger="true" (change)="PagCheckBox.onSetCheckBox($event, hub, checkedList)">
+                                                <i p-icon class="fa fa-check"></i>
+                                                </p-checkbox>
+                                            </td>
+                                            <td>{{hub.id}}</td>
+                                            <td>{{hub.name}}</td>
+                                            <td>{{hub.description}}</td>
+                                            <td>{{hub.type}}</td>
+                                            <td>{{hub.details}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <!--<tr>
+                                        <td colspan="6">
+                                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>  
+                                        </td>
+                                    </tr>-->  
+                                    </tfoot>
+                                </table>
+                                <pagination [rotate]="true" [itemsPerPage]="paginationPageLimit" [totalItems]="paginationTotalHubs" [maxSize]="paginationMaxSize" [(ngModel)]="paginationCurrentPage" 
+                                [ngModelOptions]="{standalone: true}" (pageChanged)="pageChangedHubs($event)" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
+                            </div> 
+                    </accordion-group> 
+                </div>
+                <div *ngIf="ShowNodes" [@fadeInOut] id="node-accordion" >
+                    <accordion-group heading="Nodes" [isOpen]="true">
+                            <div class="table-responsive">
+                                    <table  class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Node ID</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Type</th>
+                                            <th>Details</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let node of nodes">
+                                            <td><p-checkbox  #myCheckbox [disabled]="PagCheckBox.disabled(node, checkedList)" [checked]="PagCheckBox.getSelectedItems(node, checkedList)" 
+                                                outline="true" 
+                                                animation="rotate" color="danger" bigger="true" (change)="PagCheckBox.onSetCheckBox($event, node, checkedList)">
+                                                <i p-icon class="fa fa-check"></i>
+                                                </p-checkbox>
+                                            </td>
+                                            <td>{{node.id}}</td>
+                                            <td>{{node.name}}</td>
+                                            <td>{{node.description}}</td>
+                                            <td>{{node.type}}</td>
+                                            <td>{{node.details}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <!--<tr>
+                                        <td colspan="6">
+                                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>  
+                                        </td>
+                                    </tr>-->  
+                                    </tfoot>
+                                </table>
+                                <pagination [rotate]="true" [itemsPerPage]="paginationPageLimit" [totalItems]="paginationTotalNodes" [maxSize]="paginationMaxSize" [(ngModel)]="paginationCurrentPage" 
+                                [ngModelOptions]="{standalone: true}" (pageChanged)="pageChangedNodes($event)" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
+                            </div> 
+                    </accordion-group> 
+                </div>
+            </accordion>
+
+        <div>
+            <button  *ngIf="ShowZones" [disabled]="itemsInList()" class="btn btn-warning btn-custom"  type="button" (click)="beginLoadingHubs()" >Set Zones</button>
+            <button *ngIf="ShowHubs" [disabled]="itemsInList()" class="btn btn-info btn-custom" type="button" (click)="beginLoadingNodes()" >Set Hubs</button>
+            <button *ngIf="ShowNodes" [disabled]="itemsInList()" class="btn btn-primary btn-custom" type="button" (click)="confirmNodesSet()" >Set Nodes</button>
+            <button style="margin-left: 10px;" class="btn btn-danger btn-custom" type="button" (click)="resetForm()" >Go Back</button>
+        </div>
+            
+        <!--Collapsing Row 1-->
+        <!--<div class="panel panel-default">
+            <div id="zone_row" class="row panel-collapse collapse in"> 
+                <div class="panel-body col-xs-12">
+                        <div class="table-responsive form-group">
+                                <table id="zone_table" class="table table-striped table-bordered table-hover dataTables-example" >
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Zone ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Type</th>
+                                    <th>Details</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>453</td>
+                                    <td>Zone-one</td>
+                                    <td>Zone in area A</td>
+                                    <td>X type</td>
+                                    <td>Works for zones in X area.</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>454</td>
+                                    <td>Zone-two</td>
+                                    <td>Zone in area A</td>
+                                    <td>X type</td>
+                                    <td>Works for zones in X area.</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>455</td>
+                                    <td>Zone-three</td>
+                                    <td>Zone in area A</td>
+                                    <td>X type</td>
+                                    <td>Works for zones in X area.</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>456</td>
+                                    <td>Zone-four</td>
+                                    <td>Zone in area A</td>
+                                    <td>X type</td>
+                                    <td>Works for zones in X area.</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>457</td>
+                                    <td>Zone-five</td>
+                                    <td>Zone in area A</td>
+                                    <td>X type</td>
+                                    <td>Works for zones in X area.</td>
+                                </tr>
+            
+            
+                                </tbody>
+                                </table>
+                                <tfoot>
+                                        
+                                    <button id="set_zones" type="button" class="btn btn-info accordion-toggle" data-toggle="collapse" data-parent="#create_alert_form" href="#hub_row">Set Zones</button>
+                                </tfoot>
+                            </div>
+                </div>
+            </div>
+            </div> -->
+            <!-- End of Collapsing Row 1-->
+
+
+            <!-- Collapsing Row 2-->
+            
+            <!--<div class="panel panel-default">
+            <div id="hub_row" class="row panel-colapse collapse"> 
+                <div class="panel-body col-xs-12">
+                        <div class="table-responsive form-group">
+                                <table id="zone_table" class="table table-striped table-bordered table-hover dataTables-example" >
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Hub ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Type</th>
+                                    <th>Details</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>453</td>
+                                    <td>Hub-one</td>
+                                    <td>Hub in zone A</td>
+                                    <td>X type</td>
+                                    <td>Works in X zone.</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>454</td>
+                                    <td>Hub-two</td>
+                                    <td>Hub in zone A</td>
+                                    <td>X type</td>
+                                    <td>Works in X zone.</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>455</td>
+                                    <td>Hub-three</td>
+                                    <td>Zone in area A</td>
+                                    <td>X type</td>
+                                    <td>Works in X zone.</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>456</td>
+                                    <td>Hub-four</td>
+                                    <td>Zone in area A</td>
+                                    <td>Works in X zone.</td>
+                                    <td>X type</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                    <td>457</td>
+                                    <td>Hub-five</td>
+                                    <td>Hub in Zone</td>
+                                    <td>X type</td>
+                                    <td>Hub Works in X zone.</td>
+                                </tr>
+            
+            
+                                </tbody>
+                                </table>
+                                <tfoot>                                
+                                    <button id="set_hubs" type="button" class="btn btn-warning accordion-toggle" data-toggle="collapse" data-parent="#create_alert_form" href="#node_row">Set Hubs</button>
+                                    <button id="set_zones" type="button" class="btn btn-neutral accordion-toggle" data-toggle="collapse" data-parent="#create_alert_form" href="#zone_row">Go Back</button>
+                                </tfoot>
+                            </div>
+
+
+                </div>
+                
+
+            </div>
+            </div>
+            -->
+            <!-- End of Collapsing Row 2 -->
+
+            <!-- Collapsing Row 3-->
+            <!--<div class="panel panel-default">
+                    <div id="node_row" class="row panel-colapse collapse"> 
+                        <div class="panel-body col-xs-12">
+                                <div class="table-responsive form-group">
+                                        <table id="zone_table" class="table table-striped table-bordered table-hover dataTables-example" >
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Node ID</th>
+                                            <th>Belongs to</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Type</th>
+                                            <th>Notes</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                            <td>453</td>
+                                            <td>Hub 343</td>
+                                            <td>Node-one</td>
+                                            <td>Node in Zone A</td>
+                                            <td>X type</td>
+                                            <td>Works in X zone.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                            <td>454</td>
+                                            <td>Hub 344</td>
+                                            <td>Node-two</td>
+                                            <td>Node in Zone A</td>
+                                            <td>X type</td>
+                                            <td>Works in X zone.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                            <td>455</td>
+                                            <td>Hub 345</td>
+                                            <td>Node-three</td>
+                                            <td>Node in Zone A</td>
+                                            <td>X type</td>
+                                            <td>Works in X zone.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                            <td>456</td>
+                                            <td>Hub 346</td>
+                                            <td>Node-four</td>
+                                            <td>Node in Zone A</td>
+                                            <td>Works in X zone.</td>
+                                            <td>X type</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"  checked class="i-checks" name="input[]"></td>
+                                            <td>457</td>
+                                            <td>Hub 347</td>
+                                            <td>Hub-five</td>
+                                            <td>Node in Zone A</td>
+                                            <td>X type</td>
+                                            <td>Works in X zone.</td>
+                                        </tr>
+                    
+                    
+                                        </tbody>
+                                        </table>
+                                        <tfoot>                                
+                                            <button id="set_hubs" type="button" class="btn btn-success" data-toggle="collapse" data-target=".multi-collapse-hub" aria-expanded="false" aria-controls="hub_row node_row">Set Nodes</button>
+                                            <button id="set_zones" type="button" class="btn btn-neutral accordion-toggle" data-toggle="collapse" data-parent="#create_alert_form" href="#zone_row">Go Back</button>
+                                        </tfoot>
+                                    </div>
+
+
+                        </div>
+                        
+
+                    </div>
+            </div>-->
+                    <!-- End of Collapsing Row 3 -->
+            <!--<table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger">
+            <thead>
+                <tr>
+                <th>Name</th>
+                <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users$">
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.website }}</td>
+                </tr>
+            </tbody>
+            </table> -->
+
+    </div>
+
+</div>
+<div class="modal-footer">
+        <button type="button" class="btn btn-white" (click)="closingModal()">Close</button>
+        <button type="button" [disabled]="itemsInNodeList()" class="btn btn-primary btn-success" (click)="openEditAlertModal()">Create Alert</button>
+</div>
+    <!-- /Create Alert modal -->
+</form>
+
+
+
+<!--<swal #createSuccess title="Ticket Submitted" text="" type="success" [showCancelButton]="false" (confirm)="confirmNewTicket()">
+</swal>-->

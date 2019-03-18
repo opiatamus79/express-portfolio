@@ -1,0 +1,650 @@
+
+          <div class="row wrapper border-bottom white-bg page-heading">
+              <div class="col-lg-10">
+                  <h2>Alert Configuration</h2>
+                  <ol class="breadcrumb">
+                      <li>
+                          <a href="Customer_signup_Admin_donna.html">Safewireless </a>
+                      </li>
+                      <li class="active">
+                          <strong>Alert Configuration</strong>
+                      </li>
+                  </ol>
+              </div>
+              <div class="col-lg-2">
+
+              </div>
+          </div>
+      <div class="wrapper wrapper-content animated fadeInRight">
+              <div class="row">
+                      <div class="col-lg-12">
+                          <div class="ibox float-e-margins">
+
+                              <div class="panel panel-default">
+                                  <div class="panel-heading">
+                                      Search, Sort, and Filter
+                                  </div>
+                                  <div class="panel-body">
+
+                                         <form role="form" class="form-inline">
+                                          <div class="form-group" style="margin-right: 20px;">
+                                                    <select class="form-control m-b" name="type" id="type"[(ngModel)]="filterType" (ngModelChange)="getAlerts()" tabindex="2">
+                                                        <option value="" disabled>Select Type</option>
+                                                        <option [value]="-1" selected>Select All</option>
+                                                        <option *ngFor="let type of alertTypes" [value]="type.id">{{type.name}}</option>
+                                                    </select>
+
+                                          </div>
+                                              <div class="form-group html5buttons">
+                                                  <div class="dt-buttons btn-group" >
+                                                  <a class="btn btn-default buttons-csv buttons-html5" href="img/SupporTickets.csv"  download="SupporTickets.csv" style="color:inherit;">
+                                                      <span><i class="fa fa-file-excel-o"></i> CSV</span></a>
+                                                  <a class="btn btn-default buttons-excel buttons-html5" tabindex="0" aria-controls="DataTables_Table_0" href="#">
+                                                      <span><i class="fa fa-print"></i> Print</span></a>
+                                                  </div>
+                                              </div>
+                                              
+                                              <div class="col-xs-12 col-12 col-md-4 form-group">
+                                                <input type="text"
+                                                      class="form-control"
+                                                      #drp="bsDaterangepicker"
+                                                      bsDaterangepicker [(bsValue)]="bsRangeValue">
+                                              </div>
+
+
+
+                                              </form>
+                                              <form role="form" style="margin-top: 20px;">
+                                                  <div class="col-lg-12">
+                                                      <input type="text" class="form-control input-sm m-b-xs" id="filter"
+                                                      placeholder="Search in table" >
+                                                  </div>
+
+
+                                              </form>
+                                  </div>
+                                  </div>
+                                  </div>
+
+                          </div>
+
+              </div>
+
+          <div class="row">
+                  <div class="col-lg-12">
+                          <div class="ibox float-e-margins">
+                                  <div class="ibox-title">
+                                      <h5>Alerts</h5>
+
+                                      <div class="ibox-tools">
+                                          <a class="collapse-link">
+                                              <i class="fa fa-chevron-up"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                                  <div class="ibox-content">
+                                  <div>
+                                        <table class="footable table table-stripped toggle-arrow-tiny" data-filter="#filter"  >
+                                                <thead>
+                                                <tr>
+
+
+                                                    <th>Item No.</th>
+                                                    <th>Protocol ID</th>
+                                                    <th>Name</th>
+                                                    <th>Primary Email</th>
+                                                    <th>Primary User</th>
+                                                    <th>Enabled</th>
+                                                    <th>Name</th>
+                                                    <th>Date Created</th>
+                                                    <th></th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let alert of alerts">
+                                                    <td>{{alert.id}}</td>
+                                                    <td>{{alert.alertProtocolId}}</td>
+                                                    <td>{{alert.name}}</td>
+                                                    <td>{{alert.primary_email}}</td>
+                                                    <td>{{this.userName(alert.target_user)}}</td>
+                                                    <td>{{alert.enabled == true ? "Yes" : "No"}}</td>
+                                                    <td>{{alert.name}}</td>
+                                                    <td>{{alert.dateCreated}}</td>
+                                                    <td>
+                                                        <div class="input-group m-b">
+                                                            <div class="input-group-btn">
+                                                                <button (click)="openEditAlertModal(alert)" tabindex="-1" class="btn btn-white" type="button"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a data-toggle="modal" (click)="openEditAlertModal(alert)">Alert Settings</a></li>
+                                                                    <li><a data-toggle="modal" (click)="openNotificationModal(alert)" style="color:inherit;">Alert Notificaion</a></li>
+                                                                    <li><a (click)="deleteAlert(alert.id)">Remove</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                                <tfoot>
+                                                </tfoot>
+                                            </table>
+                                            <pagination  [rotate]="true" [itemsPerPage]="paginationPageLimit" [totalItems]="paginationTotalAlerts" [maxSize]="paginationMaxSize" [(ngModel)]="paginationCurrentPage" 
+                                            [ngModelOptions]="{standalone: true}" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
+
+                                  </div>
+                                  <div class="table-responsive" id="large_table" style="display:none;">
+                                      <table class="footable table table-stripped toggle-arrow-tiny" data-filter="#filter"  >
+                                          <thead>
+                                          <tr>
+                                              <th></th>
+                                              <th data-toggle="true">Item No.</th>
+                                              <th>Alert Set</th>
+                                              <th>Alert Set ID</th>
+                                              <th>Protocol ID</th>
+                                              <th>Primary Email</th>
+                                              <th>Primary User</th>
+                                              <th data-hide="all" >Enabled</th>
+                                              <th data-hide="all" >Email</th>
+                                              <th data-hide="all" >SMS</th>
+                                              <th data-hide="all">Push</th>
+                                              <th data-hide="all">Call</th>
+                                              <th data-hide="all">Inapp Notificaions</th>
+                                              <th>Date Created</th>
+                                              <th> Name</th>
+                                              <th></th>
+
+                                          </tr>
+                                          </thead>
+                                          <tbody>
+                                          <tr>
+                                            <!--<td>
+                                                <span [hidden]="(viewingAlert && viewingTicket === ticket.id)">
+                                                    <i class="fa fa-angle-right"></i>
+                                                </span>
+                                                <span [hidden]="!viewingTicket || (viewingTicket && viewingTicket != ticket.id)">
+                                                    <i class="fa fa-angle-down"></i>
+                                                </span>
+                                              </td>-->
+                                              <td>1</td>
+                                              <td>[]</td>
+                                              <td>53A</td>
+                                              <td>2</td>
+                                              <td>chris09@gmail.com</td>
+                                              <td>chris09@gmail.com</td>
+                                              <td><span class="badge label-primary">Enabled</span></td>
+                                              <td><span class="badge label-danger">Disabled</span></td>
+                                              <td><span class="badge badge-primary" >Enabled</span></td>
+                                              <td><span class="badge badge-primary">Enabled</span></td>
+                                              <td><span class="badge label-primary">Enabled</span></td>
+                                              <td><span class="badge label-danger">Disabled</span></td>
+                                              <td>9/10/2018</td>
+                                              <td> []</td>
+                                              <td>
+                                                  <div class="input-group m-b">
+                                                      <div class="input-group-btn">
+                                                          <button tabindex="-1" class="btn btn-white" type="button"><i class="fa fa-pencil"></i> Edit</button>
+                                                          <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
+                                                          <ul class="dropdown-menu">
+                                                              <li><a data-toggle="modal" href="#modal-edit-alert-settings">Alert Settings</a></li>
+                                                              <li><a data-toggle="modal" href="#modal-alert-notification" style="color:inherit;">Alert Notificaion</a></li>
+                                                              <li><a>Remove</a></li>
+                                                          </ul>
+                                                      </div>
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>2</td>
+                                              <td>[]</td>
+                                              <td>53A</td>
+                                              <td>12</td>
+                                              <td>angel288@gmail.com</td>
+                                              <td>angel288@gmail.com</td>
+                                              <td><span class="badge badge-danger" >Disabled</span></td>
+                                              <td><span class="badge badge-danger" >Disabled</span></td>
+                                              <td><span class="badge badge-primary">Enabled</span></td>
+                                              <td><span class="badge badge-primary">Enabled</span></td>
+                                              <td><span class="badge label-danger">Disabled</span></td>
+                                              <td><span class="badge label-danger">Disabled</span></td>
+                                              <td>5/19/2018</td>
+                                              <td> []</td>
+                                              <td>
+                                                  <div class="input-group m-b">
+                                                      <div class="input-group-btn">
+                                                          <button tabindex="-1" class="btn btn-white" type="button"><i class="fa fa-pencil"></i>  Edit</button>
+                                                          <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
+                                                          <ul class="dropdown-menu">
+                                                              <li><a data-toggle="modal" href="#modal-edit-alert-settings">Alert Settings</a></li>
+                                                              <li><a data-toggle="modal" href="#modal-alert-notification" style="color:inherit;">Alert Notificaion</a></li>
+                                                              <li><a>Remove</a></li>
+                                                          </ul>
+                                                      </div>
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>3</td>
+                                              <td>[]</td>
+                                              <td>85</td>
+                                              <td>8</td>
+                                              <td>tBank44@gmail.com</td>
+                                              <td>tBank44@gmail.com</td>
+                                              <td><span class="badge badge-danger" >Disabled</span></td>
+                                              <td><span class="badge badge-danger" >Disabled</span></td>
+                                              <td><span class="badge badge-primary">Enabled</span></td>
+                                              <td><span class="badge badge-primary">Enabled</span></td>
+                                              <td><span class="badge label-danger">Disabled</span></td>
+                                              <td><span class="badge label-danger">Disabled</span></td>
+                                              <td>5/20/2018</td>
+                                              <td> []</td>
+                                              <td>
+                                                  <div class="input-group m-b">
+                                                      <div class="input-group-btn">
+                                                          <button tabindex="-1" class="btn btn-white" type="button"><i class="fa fa-pencil"></i>  Edit</button>
+                                                          <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
+                                                          <ul class="dropdown-menu">
+                                                              <li><a data-toggle="modal" href="#modal-edit-alert-settings"><i class="fa fa-gear"></i>Alert Settings</a></li>
+                                                              <li><a data-toggle="modal" href="#modal-alert-notification" style="color:inherit;">Alert Notificaion</a></li>
+                                                              <li><a>Remove</a></li>
+                                                          </ul>
+                                                      </div>
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td>4</td>
+                                              <td>[]</td>
+                                              <td>3D</td>
+                                              <td>6</td>
+                                              <td>andy99@gmail.com</td>
+                                              <td>andy99@gmail.com</td>
+                                              <td><span class="badge badge-primary" >Enabled</span></td>
+                                              <td><span class="badge badge-danger" >Disabled</span></td>
+                                              <td><span class="badge badge-primary">Enabled</span></td>
+                                              <td><span class="badge badge-primary">Enabled</span></td>
+                                              <td><span class="badge label-danger">Disabled</span></td>
+                                              <td><span class="badge label-danger">Disabled</span></td>
+                                              <td>5/22/2018</td>
+                                              <td> []</td>
+                                              <td>
+                                                  <div class="input-group m-b">
+                                                      <div class="input-group-btn">
+                                                          <button tabindex="-1" class="btn btn-white" type="button"><i class="fa fa-pencil"></i>  Edit</button>
+                                                          <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
+                                                          <ul class="dropdown-menu">
+                                                              <li><a data-toggle="modal" href="#modal-edit-alert-settings">Alert Settings</a></li>
+                                                              <li><a data-toggle="modal" href="#modal-alert-notification" style="color:inherit;">Alert Notificaion</a></li>
+                                                              <li><a>Remove</a></li>
+                                                          </ul>
+                                                      </div>
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                          <tr >
+                                              <td>5</td>
+                                              <td>[]</td>
+                                              <td>10</td>
+                                              <td>25</td>
+                                              <td>mc930@gmail.com</td>
+                                              <td>mc930@gmail.com</td>
+                                              <td><span class="badge badge-primary" >Enabled</span></td>
+                                              <td><span class="badge badge-primary" >Enabled</span></td>
+                                              <td><span class="badge badge-primary">Enabled</span></td>
+                                              <td><span class="badge badge-primary">Enabled</span></td>
+                                              <td><span class="badge label-primary">Enabled</span></td>
+                                              <td><span class="badge label-primary">Enabled</span></td>
+                                              <td>5/23/2018</td>
+                                              <td> []</td>
+                                              <td>
+                                                  <div class="input-group m-b">
+                                                      <div class="input-group-btn">
+                                                          <button tabindex="-1" class="btn btn-white" type="button"><i class="fa fa-pencil"></i>  Edit</button>
+                                                          <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button"><span class="caret"></span></button>
+                                                          <ul class="dropdown-menu">
+                                                              <li><a data-toggle="modal" href="#modal-edit-alert-settings">Edit Alert Settings</a></li>
+                                                              <li><a data-toggle="modal" href="#modal-alert-notification" style="color:inherit;">Alert Notificaion</a></li>
+                                                              <li><a>Remove</a></li>
+                                                          </ul>
+                                                      </div>
+                                                  </div>
+                                              </td>
+                                          </tr>
+
+
+                                          </tbody>
+                                          <tfoot>
+                                          <tr>
+
+                                              <td colspan="9">
+                                                  <ul class="pagination"></ul>
+                                              </td>
+                                          </tr>
+                                          </tfoot>
+                                      </table>
+                                  </div>
+
+                                      <!-- <a data-toggle="modal" class="btn btn-primary" href="#modal-form">Create Support Ticket</a> -->
+                                      <button id="alert_modal_btn" data-toggle="modal" class="btn btn-success createAlertButton" (click)="openCreateAlertModal()"><i class="fa fa-plus"></i>Create</button>
+                                  </div>
+                              </div>
+                  </div>
+
+
+          </div>
+      </div>
+
+
+
+      <!-- Edit Alert Settings modal
+      <div class="modal inmodal" id="modal-edit-alert-settings" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content animated bounceInRight">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <i class="fa fa-bell-o modal-icon"></i>
+                      <h4 class="modal-title">Edit Alert Settings</h4>
+                      <small class="font-bold">Make sure to click on <code>Save changes</code> for your changes to take effect.</small>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form-group" id="data_1">
+                          <div class="row">
+                              <div class="col-xs-6">
+                                  <label>Alert Name</label>
+                                  <div class="form-group">
+                                   <input type="text" value="Pressure Too Low" class="form-control">
+                                  </div>
+                              </div>
+                              <div class="col-xs-6">
+                                      <label>Primary Email</label>
+                                      <div class="form-group">
+                                          <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="2">
+                                              <option disabled="true" selected>Select</option>
+                                              <option value="United States">jpt@gmail.com</option>
+                                              <option value="United Kingdom">cereberus@gmail.com</option>
+                                              <option value="United Kingdom">jptsarria@gmail.com</option>
+                                           </select>
+                                      </div>
+                                  </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-xs-6">
+                                      <label>Type</label>
+                                      <div class="form-group">
+                                          <select data-placeholder="Choose a Type..." class="chosen-select"  tabindex="2">
+                                              <option disabled="true" selected>Select</option>
+                                              <option value="hub">Hub</option>
+                                              <option value="node">Node</option>
+                                              <option value="sensor">Sensor</option>
+                                           </select>
+                                      </div>
+                                  </div>
+                              <div class="col-xs-6">
+                                  <label>Priority Level</label>
+                                  <div class="form-group">
+                                      <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="3">
+                                          <option disabled="true" selected>Select</option>
+                                          <option value="United States">Low</option>
+                                          <option value="United Kingdom">Medium</option>
+                                          <option value="United Kingdom">High</option>
+                                       </select>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-xs-6">
+                                  <label>Low/High Limit</label>
+                                  <div class="input-daterange input-group form-group" id="limit">
+                                          <input type="number" class="input-sm form-control" name="start" value="0"/>
+                                          <span class="input-group-addon">to</span>
+                                          <input type="number" class="input-sm form-control" name="end" value="0" />
+                                      </div>
+
+                              </div>
+                              <div class="col-xs-6">
+                                  <label>Low/High Inclusive</label>
+                                  <div class="input-daterange input-group form-group" id="limit_inclusive">
+                                          <input type="number" class="input-sm form-control" name="start" value="0"/>
+                                          <span class="input-group-addon">to</span>
+                                          <input type="number" class="input-sm form-control" name="end" value="0" />
+                                      </div>
+
+                              </div>
+                          </div>
+
+                           <div class="row" >
+                              <div class="col-xs-6">
+                                  <label>Valid Until</label>
+                                  <div class="input-group date">
+                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                      <input type="text" class="form-control" value="01/15/2000">
+                                 </div>
+                              </div>
+                              <div class="col-xs-6">
+                                  <label>Rate Limit</label>
+                                  <div class="form-group">
+                                   <input type="number" value="" class="form-control">
+                                  </div>
+                              </div>
+
+                          </div>
+                          <div class="row">
+                              <div class="col-xs-6">
+                                      <label>Target User Group</label>
+                                      <div class="form-group">
+                                          <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="2">
+                                              <option disabled="true" selected>Select</option>
+                                              <option value="United States">Group 1</option>
+                                              <option value="United Kingdom">Group 2</option>
+                                              <option value="United Kingdom">Group 3</option>
+                                           </select>
+                                      </div>
+                                  </div>
+                              <div class="col-xs-6">
+                                      <label>Primary User</label>
+                                      <div class="form-group">
+                                          <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="2">
+                                              <option disabled="true" selected>Select</option>
+                                              <option value="United States">William Riley</option>
+                                              <option value="United Kingdom">William Riley</option>
+                                              <option value="United Kingdom">William Riley</option>
+                                           </select>
+                                      </div>
+                                  </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-xs-6">
+                                  <label>Alert Group Name</label>
+                                  <div class="form-group">
+                                   <input type="text" value="53B" class="form-control">
+                                  </div>
+                              </div>
+                              <div class="col-xs-6">
+                                      <label>Alert Group Tier</label>
+                                      <div class="form-group">
+                                          <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="2">
+                                              <option disabled="true" selected>Select</option>
+                                              <option value="United States">Tier 1</option>
+                                              <option value="United Kingdom">Tier 2</option>
+                                              <option value="United Kingdom">Tier 3</option>
+                                           </select>
+                                      </div>
+                                  </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-xs-12">
+                                  <label>Citizen Group Name</label>
+                              <div class="form-group ">
+                                  <select data-placeholder="Choose a type..." class="chosen-select"  multiple tabindex="4">
+                                      <option value="1">01 - Group in City A </option>
+                                      <option value="1">02 - Group in City B</option>
+                                      <option value="1">03 - Group in City C</option>
+                                  </select>
+                              </div>
+                              </div>
+                          </div>
+
+                          <hr>
+
+                          <div class="row" style="margin-left:20px;">
+                              <div class="col-xs-4">
+                                  <div class="switch form-group">
+                                      <label>Enabled</label>
+                                      <div class="onoffswitch">
+                                          <input type="checkbox" class="onoffswitch-checkbox" id="as_enabled">
+                                          <label class="onoffswitch-label" for="as_enabled">
+                                              <span class="onoffswitch-inner"></span>
+                                              <span class="onoffswitch-switch"></span>
+                                          </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-xs-4">
+                                  <div class="switch form-group">
+                                      <label>SMS</label>
+                                      <div class="onoffswitch">
+                                          <input type="checkbox" class="onoffswitch-checkbox" id="as_sms">
+                                          <label class="onoffswitch-label" for="as_sms">
+                                              <span class="onoffswitch-inner"></span>
+                                              <span class="onoffswitch-switch"></span>
+                                          </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-xs-4">
+                                      <div class="switch form-group">
+                                          <label>Push</label>
+                                          <div class="onoffswitch">
+                                              <input type="checkbox" class="onoffswitch-checkbox" id="as_push">
+                                              <label class="onoffswitch-label" for="as_push">
+                                                  <span class="onoffswitch-inner"></span>
+                                                  <span class="onoffswitch-switch"></span>
+                                              </label>
+                                          </div>
+                                      </div>
+                                  </div>
+                          </div>
+                          <div class="row" style="margin-left:20px;">
+                                  <div class="col-xs-4">
+                                      <div class="switch form-group">
+                                          <label>Email</label>
+                                          <div class="onoffswitch">
+                                              <input type="checkbox" class="onoffswitch-checkbox" id="as_email">
+                                              <label class="onoffswitch-label" for="as_email">
+                                                  <span class="onoffswitch-inner"></span>
+                                                  <span class="onoffswitch-switch"></span>
+                                              </label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-4">
+                                      <div class="switch form-group">
+                                          <label>Call</label>
+                                          <div class="onoffswitch">
+                                              <input type="checkbox" class="onoffswitch-checkbox" id="as_call">
+                                              <label class="onoffswitch-label" for="as_call">
+                                                  <span class="onoffswitch-inner"></span>
+                                                  <span class="onoffswitch-switch"></span>
+                                              </label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-xs-4">
+                                          <div class="switch form-group">
+                                              <label>Inapp Notification</label>
+                                              <div class="onoffswitch">
+                                                  <input type="checkbox" class="onoffswitch-checkbox" id="as_inapp">
+                                                  <label class="onoffswitch-label" for="as_inapp">
+                                                      <span class="onoffswitch-inner"></span>
+                                                      <span class="onoffswitch-switch"></span>
+                                                  </label>
+                                              </div>
+                                          </div>
+                                      </div>
+                              </div>
+
+
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-success">Save changes</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+       /Edit Alert Settings modal -->
+
+
+
+
+
+      <!-- Edit Alert Notification modal -->
+      <div class="modal inmodal" id="modal-alert-notification" tabindex="-1" role="dialog" aria-hidden="true">
+              <div class="modal-dialog">
+              <div class="modal-content animated bounceInRight">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                          <i class="fa fa-envelope-o modal-icon"></i>
+                          <h4 class="modal-title">Edit Alert Notification</h4>
+                          <small class="font-bold">Make sure to click on <code>Save changes</code> for your changes to take effect.</small>
+                      </div>
+                      <div class="modal-body">
+                          <div class="form-group" id="data_1">
+                              <div class="row">
+                                  <div class="col-xs-6">
+                                          <label>Status Required</label>
+                                          <div class="form-group">
+                                              <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="2">
+                                                  <option disabled="true" selected>Select</option>
+                                                  <option value="United States">Yes</option>
+                                                  <option value="United Kingdom">No</option>
+                                               </select>
+                                          </div>
+                                      </div>
+                                  <div class="col-xs-6">
+                                      <label>Feedback Required</label>
+                                      <div class="form-group">
+                                          <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="3">
+                                              <option disabled="true" selected>Select</option>
+                                              <option value="United States">Yes</option>
+                                              <option value="United Kingdom">No</option>
+                                           </select>
+                                      </div>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="row">
+                              <div class="col-xs-12">
+                                  <label>Subject</label>
+                                  <div class="form-group">
+                                   <input type="text" value="" class="form-control">
+                                  </div>
+                              </div>
+
+                              </div>
+                              <div class="row">
+                                      <div class="form-group" style="margin-bottom:10px; " required="true">
+                                              <label for="exampleInputEmail2" >Message</label>
+                                              <textarea rows="5" type="text" placeholder="Enter Description" id="exampleInputEmail2"
+                                                     class="form-control"> </textarea>
+                                          </div>
+
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-success">Save changes</button>
+                          <button id="email_notification" type="button" class="btn btn-info">Send Test Notification</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- /Edit Alert Notifcation modal -->
+
+
+
+

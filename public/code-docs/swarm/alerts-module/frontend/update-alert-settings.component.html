@@ -1,0 +1,288 @@
+<form [formGroup]="editAlertFormGroup" (ngSubmit)="submitEditedAlert()">
+          <div class="modal-header">
+              <button type="button" class="close" (click)="confirmUpdate()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <i class="fa fa-bell-o modal-icon"></i>
+              <h4 class="modal-title">Edit Alert Settings</h4>
+              <small class="font-bold">Make sure to click on <code>Save changes</code> for your changes to take effect.</small>
+          </div>
+          <div class="modal-body">
+              <div class="form-group" id="data_1">
+                  <div class="row"> 
+                      <div class="col-xs-6">
+                          <label>Alert Name</label>
+                          <div class="form-group">
+                           <input type="text" class="form-control" name="name" id="name" formControlName="name">
+                          </div>
+                      </div>
+                      <div class="col-xs-6">
+                              <label>Primary Email</label>
+                              <div class="form-group">
+                                <select  class="form-control m-b" name="primary_email" id="primary_email" formControlName="primary_email" tabindex="2">
+                                    <option value="" disabled>Select Email</option>
+                                    <option *ngFor="let email of user_emails" [ngValue]="email">{{email}}</option>
+                                </select>
+                              </div>
+                          </div>
+                  </div>
+                  <div class="row"> 
+                      <div class="col-xs-6">
+                              <label>Type</label>
+                              <div class="form-group">
+                                <select class="form-control m-b" name="type" id="type"formControlName="type" tabindex="2">
+                                    <option value="" disabled selected>Select Type</option>
+                                    <option *ngFor="let type of alertTypes" [value]="type.id">{{type.name}}</option>
+                                </select>
+                              </div>
+                          </div>
+                          <div class="col-xs-6">
+                            <label>Priority Level</label>
+                            <div class="form-group">
+                              <select class="form-control m-b" name="priority" id="priority" formControlName="priority" tabindex="2">
+                                  <option value="" disabled selected>Select Level</option>
+                                  <option *ngFor="let level of alertPriorityLevels" [value]="level.id">{{level.name}}</option>
+                              </select>
+                            </div>
+                        </div>
+                  </div>
+
+                   <div class="row" > 
+                    <div class="col-xs-6">
+                        <label>Valid Until</label>
+                        <div class="input-group date" >
+                              <input type="text"
+                              class="form-control"
+                              #drp="bsDaterangepicker"
+                              bsDaterangepicker 
+                              formControlName="valid_until">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                       </div>
+                    </div>
+                      <div class="col-xs-6">
+                          <label>Rate Limit</label>
+                          <div class="form-group">
+                           <input type="number" class="form-control" name="rate_limit" formControlName="rate_limit">
+                          </div>
+                      </div>
+
+                  </div>
+                  <div class="row"> 
+                      <!--<div class="col-xs-6">
+                              <label>Target User Group</label>
+                              <div class="form-group">
+                                <select class="form-control m-b" name="target_usergroup" id="target_usergroup" formControlName="target_usergroup" tabindex="2">
+                                    <option value="" disabled selected>Select Group</option>
+                                    <option *ngFor="let group of user_groups" [value]="group.id">{{group.name + " group" }}</option>
+                                </select>
+                              </div>
+                          </div>-->
+                      <div class="col-xs-6">
+                              <label>Primary User</label>
+                              <div class="form-group">
+                                <select class="form-control m-b" name="primary_user" id="primary_user" formControlName="primary_user" tabindex="2">
+                                    <option value="" disabled selected>Select User</option>
+                                    <option *ngFor="let usr of users" [value]="usr.id">{{usr.firstname + " " + usr.lastname}}</option>
+                                </select>
+                              </div>
+                          </div>
+                  </div>
+                  <!--Removed due to not getting to add to database:
+                  <div class="row"> 
+                      <div class="col-xs-6">
+                          <label>Alert Group Name</label>
+                          <div class="form-group">
+                           <input type="text" value="53B" class="form-control">
+                          </div>
+                      </div>
+                      <div class="col-xs-6">
+                              <label>Alert Group Tier</label>
+                              <div class="form-group">
+                                  <select data-placeholder="Choose a Country..." class="chosen-select"  tabindex="2">
+                                      <option disabled="true" selected>Select</option>
+                                      <option value="United States">Tier 1</option>
+                                      <option value="United Kingdom">Tier 2</option>
+                                      <option value="United Kingdom">Tier 3</option>
+                                   </select>
+                              </div>
+                          </div>
+                  </div> -->
+
+
+
+
+                 <!-- <div class="row"> 
+                    <div class="col-xs-12">
+                        <label>Assets</label>
+                    <div class="form-group ">
+                      <ng-multiselect-dropdown
+                      [placeholder]="'Select Assets'"
+                      [data]="productType.options"
+                      formControlName="monitor_product"
+                      [settings]="productMultiSelSettings"
+                      (onSelect)="onAssetSelect($event)"
+                      (onDeSelect)="onAssetDeSelect($event)"
+                    >
+                    </ng-multiselect-dropdown>
+                    </div>
+                    </div>
+                </div>-->
+                <div class="row"> 
+                        <div class="col-xs-24" >
+                                <table class="footable table table-stripped toggle-arrow-tiny" data-filter="#filter"  >
+                                            <thead>
+                                            <tr>
+                                                <th>Asset</th>
+                                                <th>Low Limit</th>
+                                                <th>High Limit </th>
+                                                <th>Units</th>
+                                                <th>Low Incl.<i style="font-size: 20px; margin-right: 2px;" class="fa fa-question" [tooltip]="rangeInfo"></i></th>
+                                                <th>High Incl.</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="form-group" formArrayName="limits" 
+                                                *ngFor="let setting of editAlertFormGroupData.controls; let i = index;">
+                                                <!--<td>{{option.id}}</td>-->
+                                                        <td [formGroupName]="i" ><a [tooltip]="getSensorInfo(i)" >Sens. ID {{editAlertFormGroup.controls.limits.controls[i].controls.sensor_id.value}}
+                                                            <!--{{editAlertFormGroup.controls.limits.controls[i].controls.acronym.value}}-->
+                                                        </a>
+                                                        </td>
+                                                        <td [formGroupName]="i" ><input (ngModelChange)="i == 0 ? getRangeInfo() : 0" type="number" class="input-sm form-control" id="low_limit" name="low_limit" formControlName="low_limit"/></td>
+                                                        <td [formGroupName]="i" ><input (ngModelChange)="i == 0 ? getRangeInfo() : 0"  type="number" class="input-sm form-control" id="high_limit" name="high_limit" formControlName="high_limit" /></td>
+                                                        <td [formGroupName]="i" >{{editAlertFormGroup.controls.limits.controls[i].controls.units.value}}</td>
+                                                        <td [formGroupName]="i" >                             
+                                                            <select data-placeholder="Choose a Type..." class="input-sm form-control"  formControlName="low_inclusive" tabindex="2">
+                                                                <option disabled="true" selected>Select</option>
+                                                                <option value="true">Yes</option>
+                                                                <option value="false">No</option>
+                                                            </select> 
+                                                        </td>
+                                                        <td [formGroupName]="i">                            
+                                                            <select data-placeholder="Choose a Type..." class="input-sm form-control"  formControlName="high_inclusive" tabindex="2">
+                                                                <option disabled="true" selected>Select</option>
+                                                                <option value="true">Yes</option>
+                                                                <option value="false">No</option>
+                                                            </select>
+                                                        </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            </tfoot>
+                                </table>
+                            </div>
+                </div>
+                
+                  <div class="row"> 
+                      <div class="col-xs-12">
+                          <label>Asset to Monitor</label>
+                      <div class="form-group ">
+                        <ng-multiselect-dropdown
+                        [placeholder]="'Select Single Asset to monitor'"
+                        [data]="alert.limits"
+                        formControlName="monitoring_product"
+                        [settings]="select_settings"
+                        (onSelect)="onAssetSelect($event)"
+                      >
+                      </ng-multiselect-dropdown>
+                      </div>
+                      </div>
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="row" style="margin-left:20px;">
+                      <div class="col-xs-4">
+                          <div class="switch form-group">
+                              <label>Enabled</label>
+                              <ngx-toggle
+                              onColor="primary"
+                              onText="On"
+                              offColor="warning"
+                              offText="Off"
+                              size="sm"
+                              formControlName="enabled"
+                          >
+                          </ngx-toggle>
+                          </div>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="switch form-group">
+                            <label>SMS</label>
+                            <ngx-toggle
+                            onColor="primary"
+                            onText="On"
+                            offColor="warning"
+                            offText="Off"
+                            size="sm"
+                            formControlName="sms"
+                        >
+                        </ngx-toggle>
+                        </div>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="switch form-group">
+                            <label>Push</label>
+                            <ngx-toggle
+                            onColor="primary"
+                            onText="On"
+                            offColor="warning"
+                            offText="Off"
+                            size="sm"
+                            formControlName="push"
+                        >
+                        </ngx-toggle>
+                        </div>
+                          </div>
+                  </div>
+                  <div class="row" style="margin-left:20px;">
+                          <div class="col-xs-4">
+                            <div class="switch form-group">
+                                <label>Email</label>
+                                <ngx-toggle
+                                onColor="primary"
+                                onText="On"
+                                offColor="warning"
+                                offText="Off"
+                                size="sm"
+                                formControlName="email"
+                            >
+                            </ngx-toggle>
+                            </div>
+                          </div>
+                          <div class="col-xs-4">
+                            <div class="switch form-group">
+                                <label>Call</label>
+                                <ngx-toggle
+                                onColor="primary"
+                                onText="On"
+                                offColor="warning"
+                                offText="Off"
+                                size="sm"
+                                formControlName="call"
+                            >
+                            </ngx-toggle>
+                            </div>
+                          </div>
+                          <div class="col-xs-4">
+                            <div class="switch form-group">
+                                <label>In App Notifications</label>
+                                <ngx-toggle
+                                onColor="primary"
+                                onText="On"
+                                offColor="warning"
+                                offText="Off"
+                                size="sm"
+                                formControlName="inApp"
+                            >
+                            </ngx-toggle>
+                            </div>
+                              </div>
+                      </div>
+                  
+
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-white" (click)="confirmUpdate()">Close</button>
+            <button type="submit" class="btn btn-success" [disabled]="!editAlertFormGroup.valid">Save changes</button>
+          </div>
+</form>
