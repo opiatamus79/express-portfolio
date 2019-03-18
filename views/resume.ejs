@@ -1,0 +1,38 @@
+<%include header.ejs %>
+
+
+
+	<header class="header_area">
+		<div class="main_menu">
+			<%include navbar.ejs %>
+		</div>
+	</header>
+
+	<!--================ Start portfolio Banner Area =================-->
+	<section class="banner_area">
+		<div class="banner_inner d-flex align-items-center">
+			<div class="container">
+				<div class="banner_content text-right">
+					<h1>Resume</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================ End Portfolio Banner Area =================-->
+
+	<!--================ Start Portfolio Details Area =================-->
+	<section class="portfolio_details_area section_gap">
+		<div class="container">
+			<div class="portfolio_details_inner">
+				<div id="example1"></div>
+			</div>
+		</div>
+	</section>
+	<!--================ Start Portfolio Details Area =================-->
+
+	<% include footer.ejs %>
+
+	<script>PDFObject.embed("docs/pdf/resume.pdf");</script>
+
+  </body>
+</html>

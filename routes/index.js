@@ -37,5 +37,12 @@ router.get('/project-swarm', function(req, res, next) {
   res.render('project-swarm', { title: 'Project-Detail' });
 });
 
+router.get('/transcript', function(req, res, next) {
+  res.render('transcript', { title: 'Transcript' });
+});
+
+router.get('/resume', function(req, res, next) {
+  res.render('resume', { title: 'Resume' });
+});
 
 module.exports = router;
