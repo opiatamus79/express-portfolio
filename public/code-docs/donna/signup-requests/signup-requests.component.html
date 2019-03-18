@@ -1,0 +1,578 @@
+<div id="gray-bg">
+  <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+      <h2>Signup Requests</h2>
+      <ol class="breadcrumb">
+        <li>
+          <a [routerLink]="['/']">{{globals.city}}</a>
+        </li>
+        <li class="active">
+          <strong>Signup Requests</strong>
+        </li>
+      </ol>
+    </div>
+
+  </div>
+<div  class="wrapper wrapper-content animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <!-- <span class="text-muted small pull-right">Last update: -->
+                    <!-- <i class="fa fa-clock-o"></i> 2:10 pm - 12.06.2014</span> -->
+                    <h2>Signup Requests</h2>
+                    <p>
+                        List of submitted signup requests.<br>
+                    </p>
+                    <div class="row">
+                        <div class="col-sm-8 col-xs-12">
+                            <input #searchBox type="text" placeholder="Search" class="input form-control" id="search-box" (keyup)="search()" [(ngModel)]="searchText">
+                            <div class="form-control-feedback clear-search-padding" *ngIf="searchText">
+                                <a class="clear-search" (click)="clearSearchText()">
+                                    <i class="fa fa-times-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-12">
+                            <select name="status-select" class="search-status form-control" tabindex="2" [(ngModel)]="searchTicketStatus" (change)="search()">
+                                <option disabled value="">Select Status</option>
+                                <option value="">All</option>
+                                <option *ngFor="let status of ticketStatuses" [value]="status.id">{{status.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue"> -->
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span class="pull-right small text-muted">{{this.paginationTotalSignupRequests}} Signup Requests</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ibox-content spinner" [hidden]="!loading">
+                            <div class="">
+                                <div class="sk-spinner sk-spinner-three-bounce">
+                                    <div class="sk-bounce1"></div>
+                                    <div class="sk-bounce2"></div>
+                                    <div class="sk-bounce3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="no-tickets-text" [hidden]="loading || (signupRequests$ | async)?.tickets.length">
+                            <hr>
+                            <h2>No signup requests found</h2>
+                            <hr>
+                        </div>
+                        <div class="user-height-scroll" [hidden]="loading || (signupRequests$ | async)?.tickets.length == 0">
+                            <div class="table-responsive">
+
+                                <!-- DESKTOP TABLE -->
+                                <!-- DESKTOP TABLE -->
+                                <!-- DESKTOP TABLE -->
+
+                                <table fxShow.xs="false" fxShow="true"  class="footable table table-striped table-hover toggle-arrow-tiny"  data-filter="#filter">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th width="50px">Form ID</th>
+                                            <th class="text-center">Date Submitted</th>
+                                            <th>Customer Name</th>
+                                            <th>Email</th>
+                                            <th>Status</th>
+                                            <th>Deposit Fee</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let ticket of (signupRequests$ | async)?.tickets" class="borderless-table">
+                                        <tr (click)="viewDetails(ticket)" style="cursor: pointer" [ngClass]="{'active-tr': ticket?.id == viewingTicket}">
+                                            <td>
+                                                <span [hidden]="(viewingTicket && viewingTicket == ticket.id)">
+                                                    <i class="fa fa-angle-right"></i>
+                                                </span>
+                                                <span [hidden]="!viewingTicket || (viewingTicket && viewingTicket != ticket.id)">
+                                                    <i class="fa fa-angle-down"></i>
+                                                </span>
+                                            </td>
+                                            <td>{{ticket?.id}}</td>
+                                            <td class="text-center">
+                                                <h4>
+                                                    {{ticket?.date_created | date: 'mediumDate'}}
+                                                </h4>
+                                                <small>
+                                                    {{ticket?.date_created | dateDiff}}
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <div class="feed-element">
+                                                    <div style="padding-top: 5px">
+                                                        <h4>{{(ticket?.details?.first_name | titlecase) || '[MISSING]'}} {{ticket?.details?.last_name
+                                                            | titlecase}}</h4>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <small>
+                                                        {{ticket?.details?.email}}
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <span class="label" [ngClass]="setTicketStatusClass(ticket?.ticket_status_id)">{{ticket?.ticket_status_name}}</span>
+                                            </td>
+                                            <td>
+                                                <span class="label" [ngClass]="setBillStatusClass(ticket?.bill?.bill_status_id)">{{getBillStatusName(ticket?.bill?.bill_status_id)}}</span>
+                                            </td>
+                                            <td width="350px" class="text-center">
+                                                <div class="row" *ngIf="ticket?.ticket_status_id != 4 ">
+                                                    <div class="col-md-6">
+                                                        <button class="btn btn-success btn-block" *ngIf="ticket?.details?.step == 1" [swal]="sendDepositAlert" (click)="ticketToUpdate = ticket; $event.stopPropagation()" >Send Deposit Fee</button>
+                                                        <button class="btn btn-success btn-block" *ngIf="ticket?.details?.step == 2" [swal]="approveCustomerAlert" (click)="ticketToUpdate = ticket; $event.stopPropagation()" [disabled]="ticket?.bill?.bill_status_id != 2">Approve</button>                                                        
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button *ngIf="ticket?.details?.step != 3" class="btn btn-danger btn-block" [swal]="rejectCustomerAlert" (click)="ticketToUpdate = ticket; $event.stopPropagation()">Reject</button>
+                                                    </div>
+                                                </div>
+
+                                                <span *ngIf="ticket?.details?.step == 3">Account Created</span>
+                                                <span *ngIf="ticket?.ticket_status_id == 4">Account Rejected</span>
+                                            </td>
+                                        </tr>
+                                        <tr [hidden]="!viewingTicket || (viewingTicket && viewingTicket != ticket?.id)">
+                                            <td colspan="8" style="padding-right: 15px; padding-left: 15px;">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <!-- <hr> -->
+                                                        <h3>User Details</h3>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Name</h5>
+                                                            </div>
+                                                            <div class="col-md-12  font-light">
+                                                                {{ticket?.details?.first_name || 'N/A'}} {{ticket?.details?.last_name || 'N/A'}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Home Phone</h5>
+                                                            </div>
+                                                            <div class="col-md-12  font-light">
+                                                                {{ticket?.details?.home_phone || 'N/A'}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Mobile Phone</h5>
+                                                            </div>
+                                                            <div class="col-md-12  font-light">
+                                                                {{ticket?.details?.mobile_phone || 'N/A'}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>BirthDay</h5>
+                                                            </div>
+                                                            <div class="col-md-12  font-light">
+                                                                {{(ticket?.details?.birthday | date: 'longDate') || 'N/A'}}
+                                                                <!-- ({{ticket?.details?.birthday | dateDiff}}) -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Copy of ID</h5>
+                                                            </div>
+                                                            <div class="col-md-12  font-light">
+                                                                <div class="btn-group">
+                                                                    <button class="btn-outline btn btn-xs btn-info" (click)="showRequestID(ticket)" >VIEW COPY OF ID</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Rental Agreement</h5>
+                                                            </div>
+                                                            <div class="col-md-12  font-light">
+                                                                <div class="btn-group">
+                                                                    <button class="btn-outline btn btn-xs btn-info" (click)="showRequestRA(ticket)">VIEW RENTAL AGREEMENT</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <h3>Account Details</h3>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Service Address</h5>
+                                                            </div>
+                                                            <div class="col-md-12 font-light">
+                                                                {{ticket?.details?.service_address.street_address || 'N/A'}}<br>
+                                                                {{ticket?.details?.service_address.city || 'N/A'}}, {{ticket?.details?.service_address.state || 'N/A'}}, {{ticket?.details?.service_address.zip_code || 'N/A'}}
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Mailing Address</h5>
+                                                            </div>
+                                                            <div class="col-md-12 font-light">
+                                                                {{ticket?.details?.mailing_address.street_address || 'N/A'}}<br>
+                                                                {{ticket?.details?.mailing_address.city || 'N/A'}}, {{ticket?.details?.mailing_address.state || 'N/A'}}, {{ticket?.details?.mailing_address.zip_code || 'N/A'}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Drivers License</h5>
+                                                            </div>
+                                                            <div class="col-md-12 font-light">
+                                                                {{ticket?.details?.driver_license_number || 'N/A'}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Account Type</h5>
+                                                            </div>
+                                                            <div class="col-md-12 font-light">
+                                                                {{getAccountTypeName(ticket?.details?.account_type)}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Renting</h5>
+                                                            </div>
+                                                            <div class="col-md-12 font-light">
+                                                                <span class="pull-left">
+                                                                    <div class="true-circle circle" *ngIf="ticket?.details?.renting">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </div>
+                                                                    <div class="false-circle circle" *ngIf="!ticket?.details?.renting">
+                                                                        <i class="fa fa-times"></i>
+                                                                    </div>
+                                                                </span>
+                                                                <!-- {{ticket?.details?.renting || 'N/A'}} -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5>Trashbin</h5>
+                                                            </div>
+                                                            <div class="col-md-12 font-light">
+                                                                <span class="pull-left">
+                                                                    <div class="true-circle circle" *ngIf="ticket?.details?.require_trashbin">
+                                                                        <i class="fa fa-check"></i>
+                                                                    </div>
+                                                                    <div class="false-circle circle" *ngIf="!ticket?.details?.require_trashbin">
+                                                                        <i class="fa fa-times"></i>
+                                                                    </div>
+                                                                </span>
+                                                                <!-- {{ticket?.details?.require_trashbin || 'N/A'}} -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!--MOBILE TABLE-->
+                                <!--MOBILE TABLE-->
+                                <!--MOBILE TABLE-->
+
+                                <table fxShow.gt-xs="false" fxShow="true" class="footable table table-striped table-hover toggle-arrow-tiny table-break" data-filter="#filter">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="text-center"> ID</th>
+                                                <th class="text-center">
+                                                    Ticket
+                                                    <br>
+                                                    Info
+                                                </th>
+                                           <!--     <th>Customer Name</th>     -->
+                                             <!--<th>
+                                                 Email
+                                                </th>
+                                                <th>Status</th>-->
+                                               <!-- <th>Deposit Fee</th>-->
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let ticket of (signupRequests$ | async)?.tickets" class="borderless-table">
+                                            <tr (click)="viewDetails(ticket)" style="cursor: pointer" [ngClass]="{'active-tr': ticket?.id == viewingTicket}">
+                                                <td style="max-width: 50px;">
+                                                    <span [hidden]="(viewingTicket && viewingTicket == ticket.id)">
+                                                        <i class="fa fa-angle-right"></i>
+                                                    </span>
+                                                    <span [hidden]="!viewingTicket || (viewingTicket && viewingTicket != ticket.id)">
+                                                        <i class="fa fa-angle-down"></i>
+                                                    </span>
+                                                </td>
+                                                <td><div  class="table-break" >{{ticket?.id}}</div></td>
+                                                <td class="mobile-td">
+                                                    <div class="table-break" >
+                                                            <small class="label ml-auto " [ngClass]="setTicketStatusClass(ticket?.ticket_status_id)">{{ticket?.ticket_status_name}}</small>
+                                                            <br>
+                                                            <small><strong>Email:</strong></small><br>
+                                                            <small class="table-break mobile-p" >
+                                                                    {{ticket?.details?.email}}
+                                                            </small>
+                                                            <br>
+                                                            <small><strong>Deposit fee:</strong></small>
+                                                            <br>
+                                                            <small class="table-break">
+                                                                <span class="label" [ngClass]="setBillStatusClass(ticket?.bill?.bill_status_id)">{{getBillStatusName(ticket?.bill?.bill_status_id)}}</span>                                                
+                                                            </small><br>
+                                                            <small><strong>Date:</strong></small><br>
+                                                            <small class="mobile-date m-auto">
+                                                                    {{ticket?.date_created | date: 'shortDate'}}
+                                                            </small>
+                                                            <br>
+                                                            <small class="mobile-date">
+                                                                {{ticket?.date_created | dateDiff}}
+                                                            </small>
+                                                    </div>
+                                                </td>
+                                             <!--<td>
+                                                    <div class="feed-element">
+                                                        <div style="padding-top: 5px">
+                                                            <h4>{{(ticket?.details?.first_name | titlecase) || '[MISSING]'}} {{ticket?.details?.last_name
+                                                                | titlecase}}</h4>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td> <small>
+                                                        {{ticket?.details?.email}}
+                                                </small>
+
+                                                </td>
+                                                <td>
+                                                    <span class="label" [ngClass]="setClass(ticket?.ticket_status_id)">{{ticket?.ticket_status_name}}</span>
+                                                </td>
+                                                <td>
+                                                    Deposit Fee
+                                                </td>-->
+                                                <td class="text-center">
+                                                    <div class="row row " *ngIf="ticket?.ticket_status_id != 4 ">
+                                                        <div class="col-md-6">
+                                                            <button class="btn btn-success btn-block mobile-action-button" *ngIf="ticket?.details?.step == 1" [swal]="sendDepositAlert" (click)="ticketToUpdate = ticket; $event.stopPropagation()" >
+                                                                Send <br>
+                                                                Fee</button>
+                                                            <button class="btn btn-success btn-block mobile-action-button" *ngIf="ticket?.details?.step == 2" [swal]="approveCustomerAlert" (click)="ticketToUpdate = ticket; $event.stopPropagation()" [disabled]="ticket?.bill?.bill_status_id != 2">Approve</button>                                                        
+                                                        </div>
+                                                        <br>
+                                                        <div class="col-md-6">
+                                                            <button *ngIf="ticket?.details?.step != 3" class="btn btn-danger btn-block mobile-action-button" [swal]="rejectCustomerAlert" (click)="ticketToUpdate = ticket; $event.stopPropagation()">Reject</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <span *ngIf="ticket?.details?.step == 3">Account <br> Created</span>
+                                                    <span *ngIf="ticket?.ticket_status_id == 4">Account <br> Rejected</span>
+                                                </td>
+                                            </tr>
+                                            <tr [hidden]="!viewingTicket || (viewingTicket && viewingTicket != ticket?.id)">
+                                                <td colspan="8" style="padding-right: 15px; padding-left: 15px;">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <!-- <hr> -->
+                                                            <h3>User Details</h3>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Name</h5>
+                                                                </div>
+                                                                <div class="col-md-12  font-light">
+                                                                    {{ticket?.details?.first_name || 'N/A'}} {{ticket?.details?.last_name || 'N/A'}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Home Phone</h5>
+                                                                </div>
+                                                                <div class="col-md-12  font-light">
+                                                                    {{ticket?.details?.home_phone | formatPhone}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Mobile Phone</h5>
+                                                                </div>
+                                                                <div class="col-md-12  font-light">
+                                                                    {{ticket?.details?.mobile_phone | formatPhone}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>BirthDay</h5>
+                                                                </div>
+                                                                <div class="col-md-12  font-light">
+                                                                    {{(ticket?.details?.birthday | date: 'longDate') || 'N/A'}}
+                                                                </div>
+                                                            </div>
+                                                            <!-- <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>SSN</h5>
+                                                                </div>
+                                                                <div class="col-md-12  font-light">
+                                                                    {{ticket?.details?.ssn || 'N/A'}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Step</h5>
+                                                                </div>
+                                                                <div class="col-md-12  font-light">
+                                                                    {{ticket?.details?.step || 'N/A'}}
+                                                                </div>
+                                                            </div> -->
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Copy of ID</h5>
+                                                                </div>
+                                                                <div class="col-md-12  font-light">
+                                                                    <div class="btn-group">
+                                                                        <button class="btn-outline btn btn-xs btn-info" (click)="showRequestID(ticket)" >VIEW COPY OF ID</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Rental Agreement</h5>
+                                                                </div>
+                                                                <div class="col-md-12  font-light">
+                                                                    <div class="btn-group">
+                                                                        <button class="btn-outline btn btn-xs btn-info" (click)="showRequestRA(ticket)">VIEW RENTAL AGREEMENT</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <h3>Account Details</h3>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Service Address</h5>
+                                                                </div>
+                                                                <div class="col-md-12 font-light">
+                                                                    {{ticket?.details?.service_address || 'N/A'}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Mailing Address</h5>
+                                                                </div>
+                                                                <div class="col-md-12 font-light">
+                                                                    {{ticket?.details?.mailing_address || 'N/A'}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Drivers License</h5>
+                                                                </div>
+                                                                <div class="col-md-12 font-light">
+                                                                    {{ticket?.details?.driver_license_number || 'N/A'}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Account Type</h5>
+                                                                </div>
+                                                                <div class="col-md-12 font-light">
+                                                                    {{getAccountTypeName(ticket?.details?.account_type)}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Renting</h5>
+                                                                </div>
+                                                                <div class="col-md-12 font-light">
+                                                                    <span class="pull-left">
+                                                                        <div class="true-circle circle" *ngIf="ticket?.details?.renting">
+                                                                            <i class="fa fa-check"></i>
+                                                                        </div>
+                                                                        <div class="false-circle circle" *ngIf="!ticket?.details?.renting">
+                                                                            <i class="fa fa-times"></i>
+                                                                        </div>
+                                                                    </span>
+                                                                    <!-- {{ticket?.details?.renting || 'N/A'}} -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Trashbin</h5>
+                                                                </div>
+                                                                <div class="col-md-12 font-light">
+                                                                    <span class="pull-left">
+                                                                        <div class="true-circle circle" *ngIf="ticket?.details?.require_trashbin">
+                                                                            <i class="fa fa-check"></i>
+                                                                        </div>
+                                                                        <div class="false-circle circle" *ngIf="!ticket?.details?.require_trashbin">
+                                                                            <i class="fa fa-times"></i>
+                                                                        </div>
+                                                                    </span>
+                                                                    <!-- {{ticket?.details?.require_trashbin || 'N/A'}} -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <hr>
+                            <div class="col-xs-6" style="text-align: left; padding: 20px">
+                                <div class="btn-group" dropdown [dropup]="true">
+                                    <button id="button-autoclose1" dropdownToggle type="button" class="btn btn-default dropdown-toggle" aria-controls="dropdown-autoclose1">
+                                        {{paginationPageLimit}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul id="dropdown-autoclose1" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-autoclose1">
+                                        <li role="menuitem" [ngClass]="{'active': (paginationPageLimit == 10)}">
+                                            <a class="dropdown-item" (click)="paginationPageLimit=10; search();">10</a>
+                                        </li>
+                                        <li role="menuitem" [ngClass]="{'active': (paginationPageLimit == 15)}">
+                                            <a class="dropdown-item" (click)="paginationPageLimit=15; search();">15</a>
+                                        </li>
+                                        <li role="menuitem" [ngClass]="{'active': (paginationPageLimit == 20)}">
+                                            <a class="dropdown-item" (click)="paginationPageLimit=20; search();">20</a>
+                                        </li>
+                                        <li role="menuitem" [ngClass]="{'active': (paginationPageLimit == 30)}">
+                                            <a class="dropdown-item" (click)="paginationPageLimit=30; search();">30</a>
+                                        </li>
+                                        <li role="menuitem" [ngClass]="{'active': (paginationPageLimit == 50)}">
+                                            <a class="dropdown-item" (click)="paginationPageLimit=50; search();">50</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <span class="items-per-page"> per page</span>
+                            </div>
+                            <div class="col-xs-6" style="text-align: right">
+                                <pagination [rotate]="true" [itemsPerPage]="paginationPageLimit" [totalItems]="paginationTotalSignupRequests" [maxSize]="paginationMaxSize"
+                                    [(ngModel)]="paginationCurrentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+                                    nextText="&rsaquo;"></pagination>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<swal #sendDepositAlert title="User Signup: Approval" text="Send deposit fee to customer?" type="info" [showCancelButton]="true" confirmButtonText="Yes, send deposit fee" (confirm)="sendDepositFee()" width="350px">
+</swal>
+
+<swal #approveCustomerAlert title="User Signup: Approval" html="Enter incode account number with <b>dashes</b>" input="text" type="warning" [showCancelButton]="true" confirmButtonText="Review" (confirm)="reviewIncode($event)" width="350px">
+</swal>
+
+<swal #rejectCustomerAlert title="User Signup: Reject" text="Feedback?" input="textarea" type="error" [showCancelButton]="true"
+    confirmButtonText="Reject" (confirm)="rejectCustomer($event)" width="350px">
+</swal>
+
+<swal #success title="" text="" type="success" [showCancelButton]="false" width="350px">
+</swal>
+</div>
