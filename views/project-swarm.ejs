@@ -34,8 +34,8 @@
 									<div class="left_img">
 										<div class="slider">
 											<div><img class="img-fluid" src="img/works/project-swarm-1.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-swarm-2.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-swarm-0.png" alt=""></div>
+											<div class="imgHide"><img class="img-fluid" src="img/works/project-swarm-2.png" alt=""></div>
+											<div class="imgHide"><img class="img-fluid" src="img/works/project-swarm-0.png" alt=""></div>
 
 										</div>
 									</div>
@@ -114,7 +114,7 @@
 							<!--=================/ Project SLIDER ==================== -->
 			</div>
 			
-				<p> This project is currently being developed and was started as a reboot of the original SWARM project that had begun in Columbia. The main purpose for this web application is to monitor Oil Well Equipment in a remote area and be able to signal alerts when specific readings are met, in real-time. The project also was developed to manage devices that are used to monitor Oil Well Equipment such as Hubs, Nodes, and Sensors. This is used by the Staff in Columbia to determine the locations of their devices and be able to use a Map based view developed with Arcgis to easily find devices in a remote area.</p>
+				<p> This project is currently being developed and was started as a reboot of the original SWRS project that had begun in Columbia. The main purpose for this web application is to monitor Oil Well Equipment in a remote area and be able to signal alerts when specific readings are met, in real-time. The project also was developed to manage devices that are used to monitor Oil Well Equipment such as Hubs, Nodes, and Sensors. This is used by the SWRS staff in Columbia to determine the locations of their devices and be able to use a Map based view developed with Arcgis to easily find devices in a remote area.</p>
 
 			</div>
 
@@ -141,6 +141,9 @@ $( document ).ready(function() {
 	   autoplay:true,
 	   autoplayTimeout:18000,
 	   autoplayHoverPause:true,
+	   touchDrag: false,
+	   mouseDrag: false,
+	   checkVisible: false,
 
         nav:true,
       navText: ['<i class="fa fa-angle-left fa-2x" aria-hidden="true"></i>', '<i class="fa fa-angle-right fa-2x" aria-hidden="true"></i>']

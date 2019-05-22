@@ -64,7 +64,7 @@
 								<div class="offset-md-1 col-md-4">
 									<div class="portfolio_right_text mt-30">
 										<h4>Setting up the Communication module</h4>
-										<p>Had setup <a target="_blank" href="https://www.npmjs.com/package/nodemailer">Nodemailer</a> to be able to send emails to vendors that were involved in a purchase from Woocommerce site. The Woocommerce api originally only sent the woocommerce account an email and would not send out emails to the vendors involved in a sale nor would the items be seperated for each vendor on a receipt. This was handled by the web api I built.</p>
+										<p>Setup <a target="_blank" href="https://www.npmjs.com/package/nodemailer">Nodemailer</a> to be able to send emails to vendors that were involved in a purchase from Woocommerce site. The Woocommerce api originally only sent the woocommerce account an email and would not send out emails to the vendors involved in a sale nor would the items be seperated for each vendor on a receipt. This was handled by the web api I built.</p>
 										<ul class="list">
 											<li><span>Code Used</span>: <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/app_modules/communication/woocommerceRoutes-snippet.js"> WooCommerceRoutes-snippet.js</a>, <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/tob-api/app_modules/communication/communication.js"> communication.js </a></li>
 										</ul>
@@ -77,8 +77,7 @@
 								<div class="col-md-7">
 									<div class="left_img">
 										<div class="slider">
-											<div><img class="img-fluid" src="img/works/project-tob-6.png" alt=""></div>
-											<div><img class="img-fluid" src="img/works/project-donna-9.png" alt=""></div>
+											<div><img class="img-fluid" src="img/works/project-tob-6.png" alt=""></div>	
 
 										</div>
 									</div>
@@ -125,6 +124,9 @@ $( document ).ready(function() {
 	   autoplay:true,
 	   autoplayTimeout:18000,
 	   autoplayHoverPause:true,
+	   mouseDrag: false,
+	   pullDrag: false,
+	   checkVisible: false,
         nav:true,
       navText: ['<i class="fa fa-angle-left fa-2x" aria-hidden="true"></i>', '<i class="fa fa-angle-right fa-2x" aria-hidden="true"></i>']
 });
