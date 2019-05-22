@@ -44,9 +44,9 @@
 								<div class="offset-md-1 col-md-4">
 									<div class="portfolio_right_text mt-30">
 										<h4>JWT Authentication for Login</h4>
-										<p>I was responsible for setting up the JWT authentication used for logging a user on to the site, storing JWT token, and storing the users session. This was done on the Angular 2 app used for project. Was also responsible for setting up the DNS with A address <a target="_blank" href="http://livedemo.iswarm.net/"> livedemo.iswarm.net </a> on the live server with <a target="_blank" href="https://www.nginx.com/">NGINX </a>.</p>
+										<p>I was responsible for setting up the JWT authentication used for logging a user on to the site, storing JWT token, and storing the users session. This was done on the Angular 6 app used for project. Was also responsible for setting up the DNS with A address <a target="_blank" href="http://livedemo.iswarm.net/"> livedemo.iswarm.net </a> on the live server with <a target="_blank" href="https://www.nginx.com/">NGINX </a>.</p>
 										<ul class="list">
-											<li><span>Code Used</span>: <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/jwt-authentication/frontend/auth.service.ts">auth.service.ts</a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/jwt-authentication/frontend/jwt.interceptor.ts"> jwt.interceptor.ts</a>, <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/jwt-authentication/frontend/login.component.html">login.component.html </a>, <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/jwt-authentication/frontend/login.component.ts">login.component.ts</a>, <a target="_blank" href="">swarm.conf </a></li>
+										<li> <span>Code Used:</span> <bold> Closed Source </bold></li>
 										</ul>
 
 									</div>
@@ -76,11 +76,11 @@
 								<div class="offset-md-1 col-md-4">
 									<div class="portfolio_right_text mt-30">
 										<h4>Setting up the Alert Component</h4>
-										<p>One of the main features of this web application is to notify a set of users when custom set readings are transmitted from a Well Monitoring device to the listening endpoint on the Web Api. I was responsible for creating the Angular 2 components used to manage alerts. I was also required to setup the backend routes that send paginated data to view Alerts/Devices. I was also required to create the unique design that allows a user to create an alert for a specific device, by filtering the Zone, Hub, and Node.</p>
+										<p>One of the main features of this web application is to notify a set of users when custom set readings are transmitted from a Well Monitoring device to the listening endpoint on the Web Api. I was responsible for creating the Angular 6 components used to manage alerts. I was also required to setup the backend routes that send paginated data to view Alerts/Devices. I was also required to create the unique design that allows a user to create an alert for a specific device, by filtering the Zone, Hub, and Node.</p>
 										<ul class="list">
-											<li><span>Code Used</span>:  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/frontend/alert-configuration.component.html"> alert-configuration.component.html </a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/frontend/alert-configuration.component.ts"> alert-configuration.component.ts </a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/frontend/alert-notification.component.ts">alert-notification.component.ts </a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/frontend/alerts.service.ts">alert.service.ts </a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/frontend/create-alert.component.ts">create-alert.component.ts </a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/frontend/update-alert-settings.component.ts">update-alert-settings.component.ts </a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/backend/alertSettingsFactory.js">alertSettingsFactory.js </a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/backend/alertSettings.js">alertSettings.js </a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/backend/alertRoutes.js">alertRoutes.js </a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/backend/alertProtocols.js">alertProtocols.js </a>,  <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/backend/alertPTypes.js">alertPTypes.js </a>, <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/alerts-module/backend/alert.js"> alert.js </a></li>
+										<li> <span>Code Used:</span> <bold> Closed Source </bold></li> 	
 										</ul>
-
+		
 									</div>
 								</div>
 							</div>
@@ -105,7 +105,7 @@
 										<h4>Database Schema Updates</h4>
 										<p>In order to complete much of the Alerts functionality on the site I was required to make modfications to the original database schema used on previous SWARM project, mostly concerning how the schema was setup to store the custom sensor reading values (limits) used to trigger an alert. There were also significant changes needed on the Web Api and DB schema after permissions were setup per device. </p>
 										<ul class="list">
-											<li><span>Code Used</span>: <a target="_blank" href="https://github.com/opiatamus79/express-portfolio/blob/master/public/code-docs/swarm/database-updates/backend/create.sql">create.sql</a></li>
+											<li><span>Code Used:</span> <bold>Closed Source</bold></li>
 										</ul>
 
 									</div>
@@ -141,6 +141,7 @@ $( document ).ready(function() {
 	   autoplay:true,
 	   autoplayTimeout:18000,
 	   autoplayHoverPause:true,
+
         nav:true,
       navText: ['<i class="fa fa-angle-left fa-2x" aria-hidden="true"></i>', '<i class="fa fa-angle-right fa-2x" aria-hidden="true"></i>']
 });
