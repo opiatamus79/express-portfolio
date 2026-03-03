@@ -1,2 +1,5 @@
 # express-portfolio
-Portfolio built with express/nodejs
+
+Privacy policy: 
+Will not collect any data, 
+
